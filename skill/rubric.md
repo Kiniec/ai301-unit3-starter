@@ -45,7 +45,9 @@ family will fail eval packages designed around that family.
 
 | Check | Evidence | Pass condition | Weight |
 |---|---|---|---|
-|  |  |  |  |
+| diagnosis_matches_repro | The plan's stated cause, read against the repro evidence it quotes | The cause explains the exact quoted symptom and names a cause (file, function, or  condition), not just the symptom. It doesn't contradict the evidence.| required  |
+| scope_bounded | The plan's scope statement and files-to-touch, read against the diagnosis |One bounded fix to the diagnosed cause. Every file traces to it, and the plan says what it won't change. Adjacent cleanups or refactors fail. | required|
+| test_plan_observable| The plan's test plan, read against the unit 2 repro steps| It re-runs the original repro steps and states a concrete before and after result (an output, error, or exit code). "Verify it works" fails.| required|
 
 ## Verdict rule
 
@@ -53,3 +55,5 @@ family will fail eval packages designed around that family.
 unclear is treated. Example shape (write your own): "accept if every
 required check passes; preferred checks never change the verdict;
 unclear counts as fail." -->
+
+ Accept only if every required check passes. Any required check that fails or is unclear/? means reject. Unclear counts as fail.
